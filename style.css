@@ -110,3 +110,31 @@ button {
   color: #d22;
   min-height: 20px;
 }
+
+.contactBox {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #e3e7f0;
+  text-align: center;
+}
+
+.contactBox h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.contactBox p {
+  margin: 0 0 8px;
+  color: #555;
+  font-size: 14px;
+}
+
+.contactBox a {
+  color: #5b63ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contactBox a:hover {
+  text-decoration: underline;
+}
