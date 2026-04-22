@@ -1,0 +1,8 @@
+{
+  "bookTitle": "Demo Book",
+  "items": [
+    { "n": 1, "code": "P001", "img": "answers/a1.jpg" },
+    { "n": 2, "code": "P002", "img": "answers/a2.jpg" },
+    { "n": 3, "code": "P003", "img": "answers/a3.jpg" }
+  ]
+}
