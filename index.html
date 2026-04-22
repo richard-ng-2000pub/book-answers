@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Answers</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <section id="loginView" class="card">
+      <h1>Enter Book Code</h1>
+      <input id="bookCodeInput" type="text" placeholder="Enter your code">
+      <button id="openBookBtn">Open</button>
+      <p id="loginMsg"></p>
+    </section>
+
+    <section id="bookView" class="hidden">
+      <div class="topbar">
+        <h2 id="bookTitle"></h2>
+        <input id="searchInput" type="text" placeholder="Search by number or code">
+      </div>
+      <div id="grid" class="grid"></div>
+    </section>
+
+    <section id="answerView" class="hidden">
+      <div class="answerHeader">
+        <button id="backBtn">Back</button>
+        <h3 id="answerTitle"></h3>
+      </div>
+      <div class="answerBox">
+        <img id="answerImg" alt="Answer image">
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
