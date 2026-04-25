@@ -66,9 +66,22 @@ async function openBook() {
     if (!res.ok) throw new Error("Cannot load book data");
 
     currentBook = await res.json();
-    allItems = currentBook.items || [];
+    allItems = [];
 
-    els.bookTitle.textContent = bookMeta.title || currentBook.bookTitle || "Book Answers";
+    const start = Number(currentBook.start || 1);
+    const end = Number(currentBook.end || 0);
+    const folder = currentBook.folder || "";
+    const ext = currentBook.ext || "svg";
+
+    for (let i = start; i <= end; i++) {
+      allItems.push({
+        n: i,
+        code: String(i),
+        img: `${folder}/${i}.${ext}`
+      });
+    }
+
+    els.bookTitle.textContent = currentBook.bookTitle || bookMeta.title || "Book Answers";
     els.loginView.classList.add("hidden");
     els.answerView.classList.add("hidden");
     els.bookView.classList.remove("hidden");
@@ -84,7 +97,7 @@ function renderFilteredGrid() {
   const q = els.searchInput.value.trim().toLowerCase();
 
   const filtered = allItems.filter(item => {
-    return String(item.n).includes(q) || String(item.code || "").toLowerCase().includes(q);
+    return String(item.n).includes(q) || String(item.code).toLowerCase().includes(q);
   });
 
   els.grid.innerHTML = "";
@@ -93,7 +106,7 @@ function renderFilteredGrid() {
     const btn = document.createElement("button");
     btn.className = "puzzle-btn";
     btn.textContent = item.n;
-    btn.title = item.code || "";
+    btn.title = item.code;
     btn.addEventListener("click", () => showAnswer(item));
     els.grid.appendChild(btn);
   }
