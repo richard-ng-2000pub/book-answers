@@ -141,6 +141,16 @@ function renderFilteredGrid() {
   }
 }
 
+  for (const item of filtered) {
+    const btn = document.createElement("button");
+    btn.className = "puzzle-btn";
+    btn.textContent = item.n;
+    btn.title = item.code;
+    btn.addEventListener("click", () => showAnswer(item));
+    els.grid.appendChild(btn);
+  }
+}
+
 function showAnswer(item) {
   els.answerTitle.textContent = `Puzzle ${item.n}`;
   els.answerMsg.classList.add("hidden");
