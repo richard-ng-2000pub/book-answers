@@ -22,7 +22,7 @@ init();
 
 async function init() {
   try {
-    const res = await fetch("assets/books.json", { cache: "no-store" });
+    const res = await fetch("assets/books.json?v=3", { cache: "no-store" });
     const data = await res.json();
     booksIndex = data.books || [];
   } catch (err) {
@@ -32,7 +32,7 @@ async function init() {
 
 els.openBookBtn.addEventListener("click", openBook);
 
-els.bookCodeInput.addEventListener("keydown", function(e) {
+els.bookCodeInput.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     openBook();
   }
@@ -77,7 +77,7 @@ async function openBook() {
       return;
     }
 
-    const res = await fetch(bookMeta.data, { cache: "no-store" });
+    const res = await fetch(`${bookMeta.data}?v=3`, { cache: "no-store" });
     if (!res.ok) {
       throw new Error("Cannot load book data.");
     }
@@ -147,13 +147,13 @@ function showAnswer(item) {
   els.answerMsg.textContent = "";
   els.answerImg.style.display = "block";
 
-  els.answerImg.onload = function() {
+  els.answerImg.onload = function () {
     els.answerMsg.classList.add("hidden");
     els.answerMsg.textContent = "";
     els.answerImg.style.display = "block";
   };
 
-  els.answerImg.onerror = function() {
+  els.answerImg.onerror = function () {
     els.answerImg.style.display = "none";
     els.answerMsg.textContent = `Cannot load image: ${item.img}`;
     els.answerMsg.classList.remove("hidden");
