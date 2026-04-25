@@ -15,10 +15,19 @@ const els = {
 
 let currentBook = null;
 let allItems = [];
+let booksIndex = [];
 
-const BOOK_MAP = {
-  "TEST-BOOK-01": "assets/demo-book.json"
-};
+init();
+
+async function init() {
+  try {
+    const res = await fetch("assets/books.json", { cache: "no-store" });
+    const data = await res.json();
+    booksIndex = data.books || [];
+  } catch (err) {
+    els.loginMsg.textContent = "Failed to load book index.";
+  }
+}
 
 els.openBookBtn.addEventListener("click", openBook);
 els.searchInput.addEventListener("input", renderFilteredGrid);
@@ -27,36 +36,55 @@ els.backBtn.addEventListener("click", () => {
   els.bookView.classList.remove("hidden");
 });
 
+async function sha256(text) {
+  const enc = new TextEncoder();
+  const buffer = await crypto.subtle.digest("SHA-256", enc.encode(text));
+  const bytes = Array.from(new Uint8Array(buffer));
+  return bytes.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
 async function openBook() {
   const code = els.bookCodeInput.value.trim();
-  const file = BOOK_MAP[code];
 
-  if (!file) {
-    els.loginMsg.textContent = "Invalid book code.";
+  if (!code) {
+    els.loginMsg.textContent = "Please enter your book code.";
     return;
   }
 
+  els.loginMsg.textContent = "";
+
   try {
-    const res = await fetch(file, { cache: "no-store" });
-    if (!res.ok) throw new Error("Cannot load data");
+    const codeHash = await sha256(code);
+    const bookMeta = booksIndex.find(b => b.codeHash === codeHash);
+
+    if (!bookMeta) {
+      els.loginMsg.textContent = "Invalid book code.";
+      return;
+    }
+
+    const res = await fetch(bookMeta.data, { cache: "no-store" });
+    if (!res.ok) throw new Error("Cannot load book data");
 
     currentBook = await res.json();
     allItems = currentBook.items || [];
 
-    els.bookTitle.textContent = currentBook.bookTitle || "Book Answers";
+    els.bookTitle.textContent = bookMeta.title || currentBook.bookTitle || "Book Answers";
     els.loginView.classList.add("hidden");
     els.answerView.classList.add("hidden");
     els.bookView.classList.remove("hidden");
+
+    els.searchInput.value = "";
     renderFilteredGrid();
   } catch (err) {
-    els.loginMsg.textContent = "Failed to load book data.";
+    els.loginMsg.textContent = "Failed to open this book.";
   }
 }
 
 function renderFilteredGrid() {
   const q = els.searchInput.value.trim().toLowerCase();
+
   const filtered = allItems.filter(item => {
-    return String(item.n).includes(q) || String(item.code).toLowerCase().includes(q);
+    return String(item.n).includes(q) || String(item.code || "").toLowerCase().includes(q);
   });
 
   els.grid.innerHTML = "";
@@ -72,7 +100,7 @@ function renderFilteredGrid() {
 }
 
 function showAnswer(item) {
-  els.answerTitle.textContent = `Puzzle ${item.n}${item.code ? " - " + item.code : ""}`;
+  els.answerTitle.textContent = `Puzzle ${item.n}`;
   els.answerImg.src = item.img;
   els.bookView.classList.add("hidden");
   els.answerView.classList.remove("hidden");
