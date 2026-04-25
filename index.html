@@ -4,21 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Answers</title>
+  <link rel="icon" type="image/png" href="site-icon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="wrap">
+
     <section id="loginView" class="card">
       <h1>Enter Book Code</h1>
       <input id="bookCodeInput" type="text" placeholder="Enter your code">
       <button id="openBookBtn">Open</button>
       <p id="loginMsg"></p>
+
+      <div class="contactBox">
+        <h3>Contact us</h3>
+        <p>If you need help, please contact us at:</p>
+        <a href="mailto:abc@gmail.com">abc@gmail.com</a>
+      </div>
     </section>
 
     <section id="bookView" class="hidden">
       <div class="topbar">
         <h2 id="bookTitle"></h2>
-        <input id="searchInput" type="text" placeholder="Search by number">
+        <input id="searchInput" type="text" placeholder="Search exact puzzle number">
       </div>
       <div id="grid" class="grid"></div>
     </section>
@@ -28,10 +36,14 @@
         <button id="backBtn">Back</button>
         <h3 id="answerTitle"></h3>
       </div>
+
       <div class="answerBox">
         <img id="answerImg" alt="Answer image">
       </div>
+
+      <p id="answerMsg" class="answerMsg hidden"></p>
     </section>
+
   </div>
 
   <script src="app.js"></script>
