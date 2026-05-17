@@ -5,6 +5,12 @@
       "title": "RN-JS-01",
       "codeHash": "b9109c655fd140067d22a4568850471c5bf01c5d37ec39e014c1e4283cb086e0",
       "data": "assets/rn-js-01.json"
+    },
+    {
+      "id": "rn-ks-012",
+      "title": "RN-KS-012",
+      "codeHash": "cdc0303db143d2958cacf76d77f893eac3d516f42f77dc4b0645cd2b08009db2",
+      "data": "assets/rn-ks-012.json"
     }
   ]
 }
